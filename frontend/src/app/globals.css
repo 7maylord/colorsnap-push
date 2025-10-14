@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes twinkle-delayed {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  25% { opacity: 0.8; transform: scale(1.3); }
+  75% { opacity: 0.5; transform: scale(1.1); }
+}
+
+@keyframes bounce-around-1 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(20px, -30px) rotate(8deg); }
+  40% { transform: translate(-15px, 10px) rotate(-6deg); }
+  60% { transform: translate(25px, 25px) rotate(12deg); }
+  80% { transform: translate(-10px, -20px) rotate(-10deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes bounce-around-2 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-25px, 15px) rotate(-10deg); }
+  50% { transform: translate(15px, -20px) rotate(7deg); }
+  75% { transform: translate(-20px, 25px) rotate(10deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes bounce-around-3 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  30% { transform: translate(10px, 25px) rotate(12deg); }
+  60% { transform: translate(-20px, -15px) rotate(-8deg); }
+  90% { transform: translate(20px, 10px) rotate(6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite 2s;
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite 1s;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-twinkle-delayed {
+  animation: twinkle-delayed 4s ease-in-out infinite 1.5s;
+}
+
+.bounce-bottle-1 {
+  animation: bounce-around-1 7s ease-in-out infinite;
+}
+.bounce-bottle-2 {
+  animation: bounce-around-2 8s ease-in-out infinite 1.5s;
+}
+.bounce-bottle-3 {
+  animation: bounce-around-3 9s ease-in-out infinite 2.2s;
+}
