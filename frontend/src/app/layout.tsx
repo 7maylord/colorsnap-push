@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { headers } from 'next/headers'
 import './globals.css';
-import ContextProvider from '@/context'
+import { PushChainProvider } from '@/providers/PushChainProvider'
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 
@@ -23,25 +22,21 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "ColorSnap - Somnia Color Matching Game",
-  description: "A fun and interactive color bottle matching game built on Somnia blockchain",
-  keywords: ["Somnia", "blockchain", "game", "DApp", "Cairo", "Web3"],
+  title: "ColorSnap - Push Chain Color Matching Game",
+  description: "A fun and interactive color bottle matching game built on Push Chain - Play from any blockchain!",
+  keywords: ["Push Chain", "blockchain", "game", "DApp", "Web3", "Universal App"],
   authors: [{ name: "ColorSnap Team" }],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-  const headersData = await headers();
-  const cookies = headersData.get('cookie');
-
   return (
     <html lang="en" data-theme="light">
-        <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-gradient-to-br from-gray-50 to-somnia-50`}>
-        <ContextProvider cookies={cookies}>
+        <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-gradient-to-br from-gray-50 to-purple-50`}>
+        <PushChainProvider>
           <div className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-1">
@@ -51,11 +46,11 @@ export default async function RootLayout({
               <div className="container mx-auto px-4 text-center text-sm text-gray-600">
                 <p>
                   Built with ❤️ by {" "}
-                  <a 
-                    href="https://github.com/7maylord/colorsnap" 
-                    target="_blank" 
+                  <a
+                    href="https://github.com/7maylord/colorsnap"
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="text-somnia-600 hover:text-somnia-700 font-medium"
+                    className="text-purple-600 hover:text-purple-700 font-medium"
                   >
                     Maylord
                   </a>
@@ -63,7 +58,7 @@ export default async function RootLayout({
               </div>
             </footer>
           </div>
-        </ContextProvider>
+        </PushChainProvider>
       </body>
     </html>
   );

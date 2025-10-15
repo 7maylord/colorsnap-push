@@ -3,10 +3,17 @@ src = "src"
 out = "out"
 libs = ["lib"]
 ffi = true
+solc_version = "0.8.20"
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+]
+
+# RPC endpoints
+[rpc_endpoints]
+push_donut = "https://evm.rpc-testnet-donut-node1.push.org"
 
 # Verification settings
 [profile.default.etherscan]
-liskSepolia = { key = "${ETHERSCAN_API_KEY}" }
-baseSepolia = { key = "${ETHERSCAN_API_KEY}" }
+push_donut = { key = "${PUSH_CHAIN_API_KEY}", url = "https://donut.push.network/api" }
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

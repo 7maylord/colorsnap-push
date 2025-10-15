@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount, useReadContract, useChainId } from "wagmi";
+import { useAccount, useChainId } from "@/hooks/usePushChainWallet";
 import WalletConnectButton from "./WalletConnectButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -14,39 +14,19 @@ export default function GameIntro() {
   const walletConnected = !!isConnected && !!address;
   const [playerName, setPlayerName] = useState<string>("");
   
-  // Get contract address based on current network
-  const getContractAddress = () => {
-    if (chainId === CHAIN_IDS.ELECTRONEUM) {
-      return CONTRACT_ADDRESSES.ELECTRONEUM;
-    }
-    return CONTRACT_ADDRESSES.SOMNIA; // Default to Somnia
-  };
-  
-  const contractAddress = getContractAddress();
+  // Get Push Chain contract address
+  const contractAddress = CONTRACT_ADDRESSES.PUSH_CHAIN;
 
-  // Fetch player name using Wagmi
-  const { data: playerNameData, error: playerNameError } = useReadContract({
-    address: contractAddress as `0x${string}`,
-    abi: colorSnapAbi,
-    functionName: 'getPlayerName',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address && !!contractAddress && isConnected,
-    },
-  });
-
+  // Load player name from localStorage for now
+  // TODO: Implement viem contract read for Push Chain
   useEffect(() => {
-    if (playerNameData) {
-      setPlayerName(playerNameData as string);
-      localStorage.setItem("colorsnap_player_name", playerNameData as string);
-    } else if (address) {
-      // Fallback to localStorage if contract call fails
+    if (address) {
       const storedName = localStorage.getItem("colorsnap_player_name");
       if (storedName) {
         setPlayerName(storedName);
       }
     }
-  }, [playerNameData, playerNameError, address, contractAddress]);
+  }, [address]);
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">

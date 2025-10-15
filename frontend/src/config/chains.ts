@@ -1,57 +1,43 @@
 import { defineChain } from "viem"
 import type { AppKitNetwork } from "@reown/appkit/networks"
-import { somniaTestnet } from "@reown/appkit/networks"
 
 export const CHAIN_IDS = {
-  SOMNIA: 50312,
-  ELECTRONEUM: 5201420
+  PUSH_CHAIN: 42101
 } as const
 
-export const electroneum = defineChain({
-  id: CHAIN_IDS.ELECTRONEUM,
-  name: "Electroneum Testnet",
+// Push Chain Donut Testnet
+export const pushChainDonut = defineChain({
+  id: CHAIN_IDS.PUSH_CHAIN,
+  name: "Push Chain Donut Testnet",
   nativeCurrency: {
     decimals: 18,
-    name: "ETN",
-    symbol: "ETN",
+    name: "PC",
+    symbol: "PC",
   },
   rpcUrls: {
     default: {
-      http: [process.env.NEXT_PUBLIC_ETN_RPC_URL || ""],
+      http: ["https://evm.rpc-testnet-donut-node1.push.org"],
     },
     public: {
-      http: [process.env.NEXT_PUBLIC_ETN_RPC_URL || ""],
+      http: ["https://evm.rpc-testnet-donut-node1.push.org"],
     },
   },
   blockExplorers: {
-    default: { name: "Explorer", url: "https://testnet-explorer.electroneum.com" },
+    default: { name: "Push Explorer", url: "https://donut.push.network" },
   },
   testnet: true,
 })
 
-// Somnia Chain Config
-export const customSomniaTestnet: AppKitNetwork = {
-  ...somniaTestnet,
-  id: CHAIN_IDS.SOMNIA,
+// AppKit network config for Push Chain
+export const customPushChainDonut: AppKitNetwork = {
+  ...pushChainDonut,
+  id: CHAIN_IDS.PUSH_CHAIN,
   rpcUrls: {
     default: {
-      http: [process.env.NEXT_PUBLIC_SOMNIA_RPC_URL || ""],
+      http: ["https://evm.rpc-testnet-donut-node1.push.org"],
     },
     public: {
-      http: [process.env.NEXT_PUBLIC_SOMNIA_RPC_URL || ""],
-    },
-  },
-}
-
-export const customElectroneumTestnet: AppKitNetwork = {
-  ...electroneum,
-  id: CHAIN_IDS.ELECTRONEUM,
-  rpcUrls: {
-    default: {
-      http: [process.env.NEXT_PUBLIC_ETN_RPC_URL || ""],
-    },
-    public: {
-      http: [process.env.NEXT_PUBLIC_ETN_RPC_URL || ""],
+      http: ["https://evm.rpc-testnet-donut-node1.push.org"],
     },
   },
 }

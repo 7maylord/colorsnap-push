@@ -1,30 +1,11 @@
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import type { AppKitNetwork } from '@reown/appkit/networks'
-import { customSomniaTestnet, customElectroneumTestnet } from './chains'
-
-// Get projectId from https://cloud.reown.com
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-
-if (!projectId) {
-  throw new Error('Project ID is not defined')
-}
-
-export const networks = [
-  customSomniaTestnet,
-  customElectroneumTestnet
-] as [AppKitNetwork, ...AppKitNetwork[]]
-
-// Set up the Wagmi Adapter (Config)
-export const wagmiAdapter = new WagmiAdapter({
-  ssr: true,
-  projectId,
-  networks
-})
-
-export const config = wagmiAdapter.wagmiConfig
-
+// Push Chain configuration
 // Contract addresses for different networks
 export const CONTRACT_ADDRESSES = {
-  SOMNIA: process.env.NEXT_PUBLIC_SOMNIA_CONTRACT_ADDRESS,
-  ELECTRONEUM: process.env.NEXT_PUBLIC_ETN_CONTRACT_ADDRESS
+  PUSH_CHAIN: process.env.NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS
 }
+
+// Push Chain RPC URL
+export const PUSH_CHAIN_RPC = 'https://evm.rpc-testnet-donut-node1.push.org'
+
+// Push Chain details
+export const PUSH_CHAIN_ID = 42101

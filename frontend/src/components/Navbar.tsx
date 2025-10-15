@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import WalletConnectButton from "./WalletConnectButton";
+import WalletButton from "./WalletButton";
 
 const Logo = () => (
   <Link href="/" className="flex items-center space-x-3 group relative">
@@ -36,7 +36,7 @@ const Navbar = ({ className = "" }: NavbarProps) => {
           </Link>
         </div>
         <div className="flex items-center flex-shrink-0">
-          <WalletConnectButton />
+          <WalletButton />
         </div>
       </div>
       <style jsx global>{`

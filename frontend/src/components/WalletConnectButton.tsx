@@ -1,17 +1,14 @@
 "use client";
 
-import { useAccount, useDisconnect, useChainId, useSwitchChain } from "wagmi";
-import { useAppKit } from "@reown/appkit/react";
+import { useAccount, useDisconnect, useChainId } from "@/hooks/usePushChainWallet";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CHAIN_IDS, customSomniaTestnet, customElectroneumTestnet } from "@/config/chains";
+import { CHAIN_IDS } from "@/config/chains";
 
 export default function WalletConnectButton() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
-  const { switchChain } = useSwitchChain();
-  const { open } = useAppKit();
   const [isConnecting, setIsConnecting] = useState(false);
   const [justCopied, setJustCopied] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,11 +24,12 @@ export default function WalletConnectButton() {
     }
   };
 
-  // Connect handler
+  // Connect handler - Push Chain handles this via the wallet button
   const handleConnect = async () => {
     setIsConnecting(true);
     try {
-      open();
+      // Push Chain wallet connection is handled by PushUniversalAccountButton
+      console.log("Use WalletButton component for connection");
     } catch (e) {
       console.error("Connection error:", e);
     } finally {
@@ -46,13 +44,6 @@ export default function WalletConnectButton() {
     localStorage.removeItem("colorsnap_player_points");
     setDropdownOpen(false);
     router.push("/");
-  };
-
-  const handleSwitchNetwork = (chainId: number) => {
-    if (switchChain) {
-      switchChain({ chainId });
-    }
-    setDropdownOpen(false);
   };
 
   // Dropdown close on outside click
@@ -85,7 +76,7 @@ export default function WalletConnectButton() {
             {shortened}
           </span>
           <span className="text-xs opacity-60">
-            ({chainId === CHAIN_IDS.SOMNIA ? 'Somnia Testnet' : chainId === CHAIN_IDS.ELECTRONEUM ? 'Electroneum Testnet' : 'Unknown Network'})
+            ({chainId === CHAIN_IDS.PUSH_CHAIN ? 'Push Chain' : 'Unknown Network'})
           </span>
           {justCopied ? (
             <svg
@@ -135,32 +126,14 @@ export default function WalletConnectButton() {
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-56 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl z-50">
             <div className="py-2">
-              {/* Network Selection Section */}
-              <div className="px-4 py-2 text-xs text-white/50 border-b border-white/10">
-                Networks
+              {/* Network Section */}
+              <div className="px-4 py-2 border-b border-white/10">
+                <div className="text-xs text-white/50 mb-1">Network</div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-white/90">Push Chain Donut Testnet</span>
+                  <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">Active</span>
+                </div>
               </div>
-              <button
-                onClick={() => handleSwitchNetwork(CHAIN_IDS.SOMNIA)}
-                className={`flex items-center justify-between w-full px-4 py-2 text-sm hover:bg-white/10 text-left ${
-                  chainId === customSomniaTestnet.id ? 'text-blue-400' : 'text-white/90'
-                }`}
-              >
-                <span>Somnia Testnet</span>
-                {chainId === customSomniaTestnet.id && (
-                  <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">Active</span>
-                )}
-              </button>
-              <button
-                onClick={() => handleSwitchNetwork(CHAIN_IDS.ELECTRONEUM)}
-                className={`flex items-center justify-between w-full px-4 py-2 text-sm hover:bg-white/10 text-left ${
-                  chainId === customElectroneumTestnet.id ? 'text-blue-400' : 'text-white/90'
-                }`}
-              >
-                <span>Electroneum Testnet</span>
-                {chainId === customElectroneumTestnet.id && (
-                  <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">Active</span>
-                )}
-              </button>
 
               {/* Account Actions Section */}
               <div className="border-t border-white/10 mt-2">
