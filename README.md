@@ -1,32 +1,39 @@
-# ColorSnap Game
+# ColorSnap Game - Universal App on Push Chain
 
-The ColorSnap Game is a decentralized multi-chain game, where players match colored bottles to a target configuration to earn points. Players connect their EVM compatible wallet, set a display name, start a game, swap bottles to match the target, and submit their solution to compete on a global leaderboard.
+ColorSnap is a decentralized color-matching puzzle game built as a **Universal App** on Push Chain. Players from **any blockchain** (Ethereum, Solana, Base, etc.) can play without switching networks or holding specific tokens. Match colored bottles to target configurations, earn points, and compete on a global leaderboard.
+
+## 🌟 What Makes ColorSnap Universal?
+
+Built on **Push Chain** - the first shared-state Layer 1 blockchain that eliminates fragmentation:
+
+- ✅ **Play from Any Chain**: Users on Ethereum, Solana, or any EVM chain can play
+- ✅ **No Network Switching**: Players don't need to juggle wallets or gas tokens
+- ✅ **Unified Experience**: One app, accessible by all chains
+- ✅ **Deploy Once, Reach Everyone**: 10X your user base instantly
 
 ## Technology Stack
 
+- **Blockchain**: Push Chain Donut Testnet
 - **Smart Contracts**: Solidity with Foundry
 - **Frontend**: Next.js 15 with TypeScript
-- **Web3**: Wagmi + Reown AppKit
-- **Styling**: Tailwind CSS
-- **Network**: Somnia Testnet
+- **Wallet Connection**: Push Chain UI Kit (Universal Wallet)
+- **Web3**: Wagmi + Viem for contract interactions
+- **Styling**: Tailwind CSS v4
 
 ## Deployed Contract
 
-The ColorSnap smart contract is deployed at:
+**Network**: Push Chain Donut Testnet
 
-**Network**: Somnia Testnet
-- **Contract Address**: `0xc2dc20E9F389114578F78a7f3C3B071db0b8e8dC`
-- **Explorer**: [Somnia Explorer](https://shannon-explorer.somnia.network/address/0xc2dc20E9F389114578F78a7f3C3B071db0b8e8dC?tab=index)
-- **Chain ID**: 50312
-
-**Network**: Electroneum Testnet
-- **Contract Address**: `0xEF7902FeE12ea3D3245eD721767FB048Afa38a2f`
-- **Explorer**: [Electroneum Testnet Explorer](https://testnet-explorer.electroneum.com/address/0xEF7902FeE12ea3D3245eD721767FB048Afa38a2f)
-- **Chain ID**: 5201420
+- **Contract Address**: `0x72adE6a1780220074Fd19870210706AbCb7589BF`
+- **Explorer**: [View on Push Explorer](https://donut.push.network/address/0x72adE6a1780220074Fd19870210706AbCb7589BF)
+- **Chain ID**: 42101
+- **RPC URL**: https://evm.rpc-testnet-donut-node1.push.org
+- **Faucet**: https://faucet.push.org/
 
 ## Features
 
-- **Wallet Connection**: Connect any EVM-compatible wallet
+- **Universal Wallet Connection**: Connect with MetaMask, email, Google, or any wallet
+- **Cross-Chain Support**: Play from Ethereum, Solana, or any supported chain
 - **Player Registration**: Set your name on-chain
 - **Color Matching Game**: Match bottle configurations to earn points
 - **Global Leaderboard**: Compete with players worldwide
@@ -35,38 +42,91 @@ The ColorSnap smart contract is deployed at:
 
 ## Quick Start
 
-1. **Deploy Smart Contract**:
-   ```bash
-   cd smart-contracts
-   forge script script/Colorsnap.s.sol --rpc-url $RPC_URL --broadcast
-   ```
+### Prerequisites
 
-2. **Setup Frontend**:
-   ```bash
-   cd frontend
-   # Add contract address to .env.local
-   yarn install
-   yarn run dev
-   ```
+1. **Get PC Tokens**: Visit [Push Chain Faucet](https://faucet.push.org/)
+2. **Add Push Chain to MetaMask**:
+   - Network Name: Push Chain Donut Testnet
+   - RPC URL: https://evm.rpc-testnet-donut-node1.push.org
+   - Chain ID: 42101
+   - Currency Symbol: PC
+   - Block Explorer: https://donut.push.network
 
-3. **Get Testnet ETH**: Visit [Somnia Faucet](https://docs.somnia.network/get-started/request-stt-tokens-and-try-sending-tokens-to-a-random-address)
+### 1. Deploy Smart Contract
+
+```bash
+cd smart-contracts
+
+# Copy environment file
+cp .env.sample .env
+# Edit .env and add your private key (with 0x prefix)
+
+# Deploy to Push Chain
+forge script script/DeployPushChain.s.sol:DeployPushChain \
+  --rpc-url push_donut \
+  --broadcast \
+  --legacy
+```
+
+### 2. Setup Frontend
+
+```bash
+cd frontend
+
+# Install dependencies
+yarn install
+
+# Copy environment file
+cp .env.local.sample .env.local
+
+# Edit .env.local and add:
+# - NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS=<your_contract_address>
+# - NEXT_PUBLIC_PROJECT_ID=<your_reown_project_id>
+
+# Start development server
+yarn dev
+```
+
+Visit http://localhost:3000 and start playing!
+
+### 3. Build for Production
+
+```bash
+cd frontend
+yarn build
+yarn start
+```
 
 ## Project Structure
 
 ```
-colorsnap/
-├── frontend/          # Next.js application
+colorsnap-push/
+├── frontend/                      # Next.js application
 │   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── hooks/         # Custom hooks
-│   │   ├── app/           # Next.js app router
-│   │   └── abi/           # Contract ABI
-│   └── README.md          # Frontend setup guide
-├── smart-contracts/   # Solidity contracts
-│   ├── src/              # Contract source
-│   ├── script/           # Deployment scripts
-│   └── README.md     # Smart Contract setup guide
-└── README.md          # This file
+│   │   ├── app/                  # Next.js app router pages
+│   │   ├── components/           # React components
+│   │   │   ├── WalletButton.tsx  # Push Chain wallet button
+│   │   │   ├── ColorSnapGame.tsx # Main game component
+│   │   │   └── ...
+│   │   ├── hooks/                # Custom hooks
+│   │   │   ├── usePushChainWallet.ts  # Wallet compatibility layer
+│   │   │   └── ...
+│   │   ├── providers/            # Context providers
+│   │   │   └── PushChainProvider.tsx  # Push Chain + Wagmi provider
+│   │   ├── config/               # Configuration
+│   │   │   ├── chains.ts         # Push Chain config
+│   │   │   └── index.ts          # Contract addresses
+│   │   └── abi/                  # Contract ABI
+│   └── README.md                 # Frontend guide
+├── smart-contracts/              # Solidity contracts
+│   ├── src/
+│   │   └── Colorsnap.sol         # Main game contract
+│   ├── script/
+│   │   └── DeployPushChain.s.sol # Deployment script
+│   └── README.md                 # Contract guide
+├── PUSH_CHAIN_DEPLOYMENT.md      # Deployment guide
+├── MIGRATION_STATUS.md           # Migration details
+└── README.md                     # This file
 ```
 
 ## 🎮 How to Play ColorSnap
@@ -74,9 +134,9 @@ colorsnap/
 ### **Getting Started**
 
 1. **Connect Your Wallet** 🦊
-   - Use any EVM-compatible wallet (MetaMask, WalletConnect, etc.)
-   - Make sure you're connected to Somnia Testnet
-   - Ensure you have some testnet ETH for transactions
+   - Click "Connect Wallet" to see Push Chain's universal wallet UI
+   - Connect with MetaMask, email, Google, or WalletConnect
+   - Wallet works across all chains automatically
 
 2. **Register Your Champion Name** 🏆
    - Enter your display name (max 31 characters)
@@ -95,7 +155,7 @@ Match your bottle arrangement to the target configuration exactly. Each bottle m
 
 #### **🧪 Available Colors**
 - 🔴 **Red** - The fiery starter
-- 🔵 **Blue** - The cool challenger  
+- 🔵 **Blue** - The cool challenger
 - 🟢 **Green** - The nature warrior
 - 🟡 **Yellow** - The bright contender
 - 🟣 **Purple** - The royal challenger
@@ -124,11 +184,6 @@ Match your bottle arrangement to the target configuration exactly. Each bottle m
 - **Completed Game**: Successfully matched the target configuration
 - **Forfeited Game**: Gave up without completing the puzzle
 
-#### **Transaction Types**
-- **Submit Solution**: When your bottles match the target exactly
-- **Forfeit Challenge**: Give up and end the current game
-- **Start New Game**: Begin a fresh challenge
-
 ### **🏆 Winning Strategies**
 
 #### **Beginner Tips**
@@ -143,12 +198,6 @@ Match your bottle arrangement to the target configuration exactly. Each bottle m
 3. **Color Grouping**: Group similar colors together when possible
 4. **Efficiency Focus**: Try to solve with fewer moves for bragging rights
 
-#### **Pro Tips**
-- **Study the Target**: When you peek, memorize the pattern quickly
-- **Work Backwards**: Sometimes it's easier to work from the target backwards
-- **Use the Matched Counter**: The "✅ Matched" counter shows how many bottles are correct
-- **Don't Rush**: Take your time to plan your moves
-
 ### **🎉 Game Completion**
 
 #### **Successful Submission**
@@ -157,86 +206,142 @@ Match your bottle arrangement to the target configuration exactly. Each bottle m
 - **Congrats Message**: See a celebration animation
 - **Leaderboard Update**: Your score is updated immediately
 
-#### **Forfeiting a Game**
-- **No Points Lost**: Forfeiting doesn't affect your existing points
-- **No Penalty**: You can start a new game immediately
-- **No Congrats**: No celebration for forfeits
+## Push Chain Integration
 
-### **📊 Tracking Progress**
+### What is Push Chain?
 
-#### **Game Statistics**
-- **🔄 Swaps**: Number of bottle swaps made
-- **✅ Matched**: How many bottles are in correct positions
-- **🎯 Target Pattern**: The configuration you need to match
+Push Chain is a shared-state L1 blockchain that eliminates fragmentation:
 
-#### **Transaction Status**
-- **🚀 Submitting...**: Your solution is being verified on-chain
-- **⏳ Forfeiting...**: Your forfeit is being processed
-- **🎉 Solution Verified!**: Your submission was successful
-- **❌ Transaction failed**: Something went wrong, try again
+- **Universal Apps**: Deploy once, reach users on all chains
+- **Cross-Chain Native**: EVM + non-EVM support (Ethereum, Solana, etc.)
+- **Unified State**: Shared state across all chains
+- **No Bridges**: Direct cross-chain transactions without bridges
 
-### **🏅 Leaderboard Competition**
+### Architecture
 
-#### **Global Rankings**
-- **Points Based**: Ranked by total points earned
-- **Real-time Updates**: See your position change instantly
-- **Player Names**: Display your registered champion name
-- **Persistent Scores**: Your points are stored on-chain forever
+```
+┌─────────────────────────────────────────┐
+│   Push Chain UI Kit (Wallet)           │
+│   - Universal wallet connection         │
+│   - Email / Google / MetaMask login     │
+│   - Works across all chains             │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│   Wagmi + Viem (Contract Interactions)  │
+│   - Read/Write smart contracts          │
+│   - Event listening                     │
+│   - Transaction management              │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│   Push Chain Donut Testnet              │
+│   - ColorSnap Smart Contract            │
+│   - EVM-compatible                      │
+│   - Chain ID: 42101                     │
+└─────────────────────────────────────────┘
+```
 
-#### **Competitive Play**
-- **Multiple Games**: Play as many games as you want
-- **Point Accumulation**: Points add up across all your games
-- **Skill Development**: Improve your strategy over time
-- **Community**: Compete with players worldwide
+### Key Components
 
-### **🔧 Troubleshooting**
-
-#### **Common Issues**
-- **Transaction Pending**: Wait for the blockchain to process your transaction
-- **Wrong Network**: Make sure you're on Somnia Testnet
-- **Insufficient Gas**: Ensure you have enough testnet ETH
-- **Wallet Connection**: Reconnect your wallet if needed
-
-#### **Getting Help**
-- **Check Network**: Verify you're connected to the right network
-- **Refresh Page**: Try refreshing if the game seems stuck
-- **Clear Cache**: Clear browser cache if needed
-- **Try Again**: Most issues resolve with a simple retry
-
-### **🎮 Ready to Play?**
-
-1. **Connect your wallet** to Somnia Testnet
-2. **Register your champion name** on-chain
-3. **Start your first challenge** and begin matching bottles
-4. **Use the peek feature** strategically after 5 moves
-5. **Submit your solution** when bottles match the target
-6. **Check the leaderboard** to see how you rank
-7. **Keep playing** to improve your skills and climb the ranks!
-
-**Good luck, champion! May your color matching skills lead you to victory! 🏆✨**
+1. **PushChainProvider**: Wraps app with Push Chain wallet + Wagmi for contracts
+2. **WalletButton**: Uses `PushUniversalAccountButton` for wallet connection
+3. **Wagmi Hooks**: Standard wagmi hooks for contract interactions
+4. **Viem**: For direct contract reads and transaction handling
 
 ## Development
 
-- **Contract Development**: Use Foundry for testing and deployment
-- **Frontend Development**: Next.js with TypeScript and Tailwind
-- **Web3 Integration**: Wagmi hooks for Ethereum interactions
-- **State Management**: React hooks for local state
+### Smart Contract Development
+
+```bash
+cd smart-contracts
+
+# Run tests
+forge test
+
+# Deploy to Push Chain
+forge script script/DeployPushChain.s.sol:DeployPushChain \
+  --rpc-url push_donut \
+  --broadcast \
+  --legacy
+
+# Verify contract (optional)
+forge verify-contract \
+  --rpc-url https://evm.rpc-testnet-donut-node1.push.org \
+  --verifier blockscout \
+  --verifier-url 'https://donut.push.network/api/' \
+  <CONTRACT_ADDRESS> \
+  src/Colorsnap.sol:ColorSnap
+```
+
+### Frontend Development
+
+```bash
+cd frontend
+
+# Development mode
+yarn dev
+
+# Type checking
+yarn lint
+
+# Build for production
+yarn build
+
+# Run production build
+yarn start
+```
 
 ## Deployment
 
-- **Smart Contract**: Deploy to Somnia using Foundry
-- **Frontend**: Deploy to Vercel, Netlify, or any static hosting
-- **Environment**: Set contract address and RPC URL
+### Smart Contract Deployment
+
+See [PUSH_CHAIN_DEPLOYMENT.md](PUSH_CHAIN_DEPLOYMENT.md) for detailed instructions.
+
+### Frontend Deployment
+
+Deploy to Vercel, Netlify, or any static hosting:
+
+```bash
+# Build
+yarn build
+
+# Environment variables required:
+# - NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS
+# - NEXT_PUBLIC_PROJECT_ID (from cloud.reown.com)
+```
+
+## Resources
+
+- **Push Chain Docs**: https://push.org/docs
+- **Push Chain SDK**: https://www.npmjs.com/package/@pushchain/core
+- **UI Kit**: https://www.npmjs.com/package/@pushchain/ui-kit
+- **Faucet**: https://faucet.push.org/
+- **Explorer**: https://donut.push.network/
+- **Wagmi Docs**: https://wagmi.sh
+- **Viem Docs**: https://viem.sh
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test thoroughly
+4. Test thoroughly on Push Chain Donut Testnet
 5. Submit a pull request
 
 ## License
 
 This project is open source and available under the MIT License.
 
+## Support
+
+For issues or questions:
+- Check [MIGRATION_STATUS.md](MIGRATION_STATUS.md) for implementation details
+- Review [PUSH_CHAIN_DEPLOYMENT.md](PUSH_CHAIN_DEPLOYMENT.md) for deployment help
+- Open an issue on GitHub
+
+---
+
+**Built with ❤️ on Push Chain - The Universal Blockchain for Apps**
+
+🎮 Play from any chain | 🌍 Reach all users | 🚀 Deploy once
