@@ -6,13 +6,27 @@ import {
   type AppMetadata,
   type ProviderConfigProps,
 } from "@pushchain/ui-kit";
+import { WagmiProvider, createConfig, http } from 'wagmi';
+import { pushChainDonut } from '../config/chains';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /**
  * PushChainProvider Component
  *
- * Wraps the ColorSnap application with Push Chain's Universal Wallet Provider.
- * Enables universal wallet connection across multiple chains.
+ * Wraps the ColorSnap application with Push Chain's Universal Wallet Provider + Wagmi.
+ * Enables universal wallet connection across multiple chains + contract interactions.
  */
+
+// Create Wagmi config for Push Chain
+const config = createConfig({
+  chains: [pushChainDonut],
+  transports: {
+    [pushChainDonut.id]: http('https://evm.rpc-testnet-donut-node1.push.org'),
+  },
+});
+
+// Create Query Client
+const queryClient = new QueryClient();
 
 const PushChainProvider = ({ children }: { children: React.ReactNode }) => {
   // Wallet configuration for ColorSnap
@@ -55,9 +69,13 @@ const PushChainProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <PushUniversalWalletProvider config={walletConfig} app={appMetadata}>
-      {children}
-    </PushUniversalWalletProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <PushUniversalWalletProvider config={walletConfig} app={appMetadata}>
+          {children}
+        </PushUniversalWalletProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 };
 

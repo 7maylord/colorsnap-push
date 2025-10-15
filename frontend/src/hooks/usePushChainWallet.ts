@@ -36,9 +36,11 @@ export function useChainId() {
  * Compatible with wagmi's useDisconnect
  */
 export function useDisconnect() {
-  const { logout } = usePushWalletContext();
-
+  // Push Chain handles disconnection through the wallet button
+  // This is a no-op for compatibility
   return {
-    disconnect: logout || (() => {}),
+    disconnect: () => {
+      console.log('Disconnect handled by Push Chain wallet button');
+    },
   };
 }

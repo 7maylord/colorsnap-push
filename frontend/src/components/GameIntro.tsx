@@ -1,21 +1,14 @@
 "use client";
 
-import { useAccount, useChainId } from "@/hooks/usePushChainWallet";
+import { useAccount } from "@/hooks/usePushChainWallet";
 import WalletConnectButton from "./WalletConnectButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import colorSnapAbi from "../abi/color_snap.json";
-import { CONTRACT_ADDRESSES } from "../config";
-import { CHAIN_IDS } from "../config/chains";
 
 export default function GameIntro() {
   const { address, isConnected } = useAccount();
-  const chainId = useChainId();
   const walletConnected = !!isConnected && !!address;
   const [playerName, setPlayerName] = useState<string>("");
-  
-  // Get Push Chain contract address
-  const contractAddress = CONTRACT_ADDRESSES.PUSH_CHAIN;
 
   // Load player name from localStorage for now
   // TODO: Implement viem contract read for Push Chain

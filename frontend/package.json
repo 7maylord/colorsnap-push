@@ -12,13 +12,15 @@
     "@pushchain/core": "^2.0.19",
     "@pushchain/ui-kit": "^2.0.9",
     "@tailwindcss/postcss": "^4.1.11",
+    "@tanstack/react-query": "^5.90.3",
     "lucide-react": "^0.534.0",
     "next": "15.3.3",
     "postcss": "^8.5.6",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tailwindcss": "^4.1.11",
-    "viem": "^2.31.3"
+    "viem": "^2.38.2",
+    "wagmi": "^2.18.1"
   },
   "devDependencies": {
     "@types/node": "^22",
