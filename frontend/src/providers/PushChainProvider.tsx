@@ -41,15 +41,15 @@ const PushChainProvider = ({ children }: { children: React.ReactNode }) => {
       wallet: {
         enabled: true,    // Allow wallet connection (MetaMask, etc.)
       },
-      appPreview: true,   // Show app preview in login modal
+      appPreview: false,   // Disable app preview for compact mode
     },
 
-    // Modal UI customization
+    // Modal UI customization - Compact popup mode
     modal: {
-      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
+      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SIMPLE,  // Simple layout for compact popup
       connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
-      appPreview: true,
-      connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.BLUR,
+      appPreview: false,  // Disable preview for compact mode
+      connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.INTERACTIVE,
     },
 
     // Chain configuration - Push Chain Donut Testnet

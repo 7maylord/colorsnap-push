@@ -46,8 +46,6 @@ Create a `.env.local` file:
 # Push Chain Contract Address
 NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS=0x72adE6a1780220074Fd19870210706AbCb7589BF
 
-# Reown Cloud Project ID (get from https://cloud.reown.com)
-# Push Chain UI Kit handles wallet connection - no project ID needed!
 ```
 
 ### 3. Run Development Server
@@ -102,106 +100,6 @@ frontend/
 └── README.md
 ```
 
-## Key Components
-
-### PushChainProvider
-
-Wraps the entire app with:
-1. **Wagmi Provider** - For contract interactions
-2. **React Query Provider** - For async state management
-3. **Push Universal Wallet Provider** - For universal wallet connection
-
-```typescript
-// src/providers/PushChainProvider.tsx
-<WagmiProvider config={config}>
-  <QueryClientProvider client={queryClient}>
-    <PushUniversalWalletProvider config={walletConfig} app={appMetadata}>
-      {children}
-    </PushUniversalWalletProvider>
-  </QueryClientProvider>
-</WagmiProvider>
-```
-
-### Wallet Integration
-
-**Connection**:
-- Uses `PushUniversalAccountButton` from `@pushchain/ui-kit`
-- Supports MetaMask, WalletConnect, email, Google login
-- Cross-chain compatible
-
-**Account State**:
-```typescript
-import { useAccount } from '@/hooks/usePushChainWallet';
-
-const { address, isConnected } = useAccount();
-```
-
-### Contract Interactions
-
-**Read Contract**:
-```typescript
-import { useReadContract } from 'wagmi';
-
-const { data } = useReadContract({
-  address: contractAddress,
-  abi: colorSnapAbi,
-  functionName: 'getPlayerPoints',
-  args: [playerAddress],
-});
-```
-
-**Write Contract**:
-```typescript
-import { useWriteContract } from 'wagmi';
-
-const { writeContract } = useWriteContract();
-
-writeContract({
-  address: contractAddress,
-  abi: colorSnapAbi,
-  functionName: 'startGame',
-  args: [],
-});
-```
-
-## Configuration
-
-### Push Chain Network
-
-```typescript
-// src/config/chains.ts
-export const pushChainDonut = defineChain({
-  id: 42101,
-  name: "Push Chain Donut Testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "PC",
-    symbol: "PC",
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://evm.rpc-testnet-donut-node1.push.org"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Push Explorer",
-      url: "https://donut.push.network"
-    },
-  },
-  testnet: true,
-});
-```
-
-### Contract Addresses
-
-```typescript
-// src/config/index.ts
-export const CONTRACT_ADDRESSES = {
-  PUSH_CHAIN: process.env.NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS
-};
-```
-
 ## Development
 
 ### Available Scripts
@@ -220,12 +118,6 @@ yarn build
 yarn start
 ```
 
-### Adding New Features
-
-1. **New Component**: Add to `src/components/`
-2. **New Hook**: Add to `src/hooks/`
-3. **New Page**: Add to `src/app/`
-4. **Contract Function**: Use wagmi hooks
 
 ### Testing
 
@@ -237,65 +129,6 @@ yarn lint
 yarn build
 ```
 
-## Deployment
-
-### Environment Variables
-
-Set these in your hosting provider:
-
-```
-NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS=0x72adE6a1780220074Fd19870210706AbCb7589BF
-NEXT_PUBLIC_PROJECT_ID=<your_reown_project_id>
-```
-
-### Deploy to Vercel
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
-
-### Deploy to Netlify
-
-```bash
-# Build
-yarn build
-
-# Deploy dist folder
-netlify deploy --prod
-```
-
-## Troubleshooting
-
-### Wallet Not Connecting
-
-1. Check you have the Push Chain Donut Testnet added to MetaMask
-2. Verify RPC URL: https://evm.rpc-testnet-donut-node1.push.org
-3. Check chain ID: 42101
-
-### Contract Interactions Failing
-
-1. Ensure you have PC tokens from https://faucet.push.org/
-2. Verify contract address in `.env.local`
-3. Check you're on the correct network (Chain ID 42101)
-
-### Build Errors
-
-1. Delete `node_modules` and `.next`:
-   ```bash
-   rm -rf node_modules .next
-   yarn install
-   yarn build
-   ```
-
-2. Check TypeScript errors:
-   ```bash
-   yarn lint
-   ```
-
 ## Resources
 
 - **Push Chain Docs**: https://push.org/docs
@@ -303,14 +136,5 @@ netlify deploy --prod
 - **Wagmi Docs**: https://wagmi.sh
 - **Next.js Docs**: https://nextjs.org/docs
 - **Tailwind CSS**: https://tailwindcss.com
-
-## Support
-
-For issues:
-- Check the main [README.md](../README.md)
-- Review [PUSH_CHAIN_DEPLOYMENT.md](../PUSH_CHAIN_DEPLOYMENT.md)
-- Open an issue on GitHub
-
----
 
 **Built with Push Chain - The Universal Blockchain** 🚀

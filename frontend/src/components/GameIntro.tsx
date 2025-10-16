@@ -36,7 +36,7 @@ export default function GameIntro() {
       <div className="space-y-6 animate-slide-up-delayed">
         {!walletConnected ? (
           <div className="space-y-4 flex flex-col items-center">
-            <p className="flex justify-center text-gray-400 text-lg">Connect your Ethereum wallet to begin</p>
+            <p className="flex justify-center text-gray-400 text-lg">Connect from any blockchain to begin</p>
             <WalletConnectButton />
           </div>
         ) : (
@@ -68,7 +68,7 @@ export default function GameIntro() {
           Master the art of <span className="text-purple-400 font-bold">color matching</span> in this mind-bending puzzle game
         </p>
         <p className="text-lg text-gray-400 mb-8 text-center">
-          Built OnChain • Play to Earn • Compete Globally
+          Universal App on Push Chain • Play from Any Network • Compete Globally
         </p>
         {/* Game Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 w-full max-w-3xl mx-auto justify-center">
@@ -91,7 +91,7 @@ export default function GameIntro() {
               💎
             </div>
             <h3 className="text-white font-semibold mb-2">On-Chain Rewards</h3>
-            <p className="text-gray-400 text-sm">Earn points and achievements stored on Ethereum</p>
+            <p className="text-gray-400 text-sm">Earn points and achievements on Push Chain - accessible from any network</p>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@ export default function GameIntro() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
             <h4 className="text-lg font-semibold text-white mb-3">1. Connect Wallet</h4>
-            <p className="text-gray-300">Connect your Ethereum wallet to start playing</p>
+            <p className="text-gray-300">Connect from any blockchain - Ethereum, Solana, Base, more chain support coming soon</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
             <h4 className="text-lg font-semibold text-white mb-3">2. Set Your Name</h4>

@@ -79,10 +79,6 @@ yarn install
 # Copy environment file
 cp .env.local.sample .env.local
 
-# Edit .env.local and add:
-# - NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS=<your_contract_address>
-# - NEXT_PUBLIC_PROJECT_ID=<your_reown_project_id>
-
 # Start development server
 yarn dev
 ```
@@ -97,37 +93,6 @@ yarn build
 yarn start
 ```
 
-## Project Structure
-
-```
-colorsnap-push/
-├── frontend/                      # Next.js application
-│   ├── src/
-│   │   ├── app/                  # Next.js app router pages
-│   │   ├── components/           # React components
-│   │   │   ├── WalletButton.tsx  # Push Chain wallet button
-│   │   │   ├── ColorSnapGame.tsx # Main game component
-│   │   │   └── ...
-│   │   ├── hooks/                # Custom hooks
-│   │   │   ├── usePushChainWallet.ts  # Wallet compatibility layer
-│   │   │   └── ...
-│   │   ├── providers/            # Context providers
-│   │   │   └── PushChainProvider.tsx  # Push Chain + Wagmi provider
-│   │   ├── config/               # Configuration
-│   │   │   ├── chains.ts         # Push Chain config
-│   │   │   └── index.ts          # Contract addresses
-│   │   └── abi/                  # Contract ABI
-│   └── README.md                 # Frontend guide
-├── smart-contracts/              # Solidity contracts
-│   ├── src/
-│   │   └── Colorsnap.sol         # Main game contract
-│   ├── script/
-│   │   └── DeployPushChain.s.sol # Deployment script
-│   └── README.md                 # Contract guide
-├── PUSH_CHAIN_DEPLOYMENT.md      # Deployment guide
-├── MIGRATION_STATUS.md           # Migration details
-└── README.md                     # This file
-```
 
 ## 🎮 How to Play ColorSnap
 
@@ -292,25 +257,6 @@ yarn build
 yarn start
 ```
 
-## Deployment
-
-### Smart Contract Deployment
-
-See [PUSH_CHAIN_DEPLOYMENT.md](PUSH_CHAIN_DEPLOYMENT.md) for detailed instructions.
-
-### Frontend Deployment
-
-Deploy to Vercel, Netlify, or any static hosting:
-
-```bash
-# Build
-yarn build
-
-# Environment variables required:
-# - NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS
-# - NEXT_PUBLIC_PROJECT_ID (from cloud.reown.com)
-```
-
 ## Resources
 
 - **Push Chain Docs**: https://push.org/docs
@@ -318,8 +264,6 @@ yarn build
 - **UI Kit**: https://www.npmjs.com/package/@pushchain/ui-kit
 - **Faucet**: https://faucet.push.org/
 - **Explorer**: https://donut.push.network/
-- **Wagmi Docs**: https://wagmi.sh
-- **Viem Docs**: https://viem.sh
 
 ## Contributing
 
@@ -333,15 +277,4 @@ yarn build
 
 This project is open source and available under the MIT License.
 
-## Support
-
-For issues or questions:
-- Check [MIGRATION_STATUS.md](MIGRATION_STATUS.md) for implementation details
-- Review [PUSH_CHAIN_DEPLOYMENT.md](PUSH_CHAIN_DEPLOYMENT.md) for deployment help
-- Open an issue on GitHub
-
----
-
-**Built with ❤️ on Push Chain - The Universal Blockchain for Apps**
-
-🎮 Play from any chain | 🌍 Reach all users | 🚀 Deploy once
+----
