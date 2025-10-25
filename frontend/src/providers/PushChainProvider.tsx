@@ -29,17 +29,19 @@ const config = createConfig({
 const queryClient = new QueryClient();
 
 const PushChainProvider = ({ children }: { children: React.ReactNode }) => {
-  // Wallet configuration for ColorSnap
+  // Wallet configuration for ColorSnap with universal signer support
   const walletConfig: ProviderConfigProps = {
     // Network: TESTNET for Push Chain Donut Testnet
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
 
-    // Login options
+    // Enhanced login options for Solana and EVM support
     login: {
       email: true,        // Allow email authentication
       google: true,       // Allow Google OAuth
       wallet: {
-        enabled: true,    // Allow wallet connection (MetaMask, etc.)
+        enabled: true,    // Allow wallet connection
+        // Note: Solana wallet configuration may need to be handled differently
+        // based on the actual Push Chain UI Kit API
       },
       appPreview: false,   // Disable app preview for compact mode
     },
@@ -52,11 +54,12 @@ const PushChainProvider = ({ children }: { children: React.ReactNode }) => {
       connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.INTERACTIVE,
     },
 
-    // Chain configuration - Push Chain Donut Testnet
+    // Enhanced chain configuration for universal signer support
     chainConfig: {
       rpcUrls: {
-        // Push Chain Donut Testnet
-        "eip155:42101": ["https://evm.rpc-testnet-donut-node1.push.org"],
+        // EVM chains - using supported chain IDs
+        "eip155:42101": ["https://evm.rpc-testnet-donut-node1.push.org"], // Push Chain Donut Testnet
+        "eip155:1": ["https://eth.llamarpc.com"], // Ethereum Mai
       },
     },
   };

@@ -29,7 +29,7 @@ export default function WalletConnectButton() {
     setIsConnecting(true);
     try {
       // Push Chain wallet connection is handled by PushUniversalAccountButton
-      console.log("Use WalletButton component for connection");
+      
     } catch (e) {
       console.error("Connection error:", e);
     } finally {

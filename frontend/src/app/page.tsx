@@ -2,6 +2,7 @@
 
 import BottlesBackground from "../components/BottlesBackground";
 import GameIntro from "../components/GameIntro";
+//import UniversalSignerInfo from "../components/UniversalSignerInfo";
 
 
 export default function Home() {
@@ -9,7 +10,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 relative overflow-hidden flex flex-col items-center justify-center">
       <BottlesBackground />
-      <div className="z-10 flex flex-col items-center gap-8 w-full">
+      <div className="z-10 flex flex-col items-center gap-8 w-full max-w-4xl px-4">
+        {/* <UniversalSignerInfo /> */}
         <GameIntro />
       </div>
     </div>
