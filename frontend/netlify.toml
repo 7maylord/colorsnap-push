@@ -6,8 +6,8 @@
   publish = "out"
 
 [build.environment]
-  # Node.js version
-  NODE_VERSION = "18"
+  # Node.js version - updated to meet dependency requirements
+  NODE_VERSION = "20.18.0"
   
   # Yarn version
   YARN_VERSION = "1.22.22"
@@ -55,6 +55,8 @@
 # Environment variables (add your specific ones here)
 [context.production.environment]
   NODE_ENV = "production"
+  # Add any environment variables needed for your app
+  # NEXT_PUBLIC_PUSH_CHAIN_CONTRACT_ADDRESS = "0x72adE6a1780220074Fd19870210706AbCb7589BF"
 
 [context.deploy-preview.environment]
   NODE_ENV = "development"
