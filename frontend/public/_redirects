@@ -1,0 +1,14 @@
+# Netlify redirects for Next.js App Router
+# This ensures all routes are handled by the client-side router
+
+# Handle all routes with client-side routing
+/*    /index.html   200
+
+# Handle API routes (if any)
+/api/*    /api/:splat    200
+
+# Handle Next.js static assets
+/_next/static/*    /_next/static/:splat    200
+
+# Handle Next.js image optimization
+/_next/image/*    /_next/image/:splat    200
